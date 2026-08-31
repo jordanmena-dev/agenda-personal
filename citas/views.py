@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import Servicio, Cita
+from .models import Servicio, Cita, Cliente
 from django.utils import timezone
 
 def lista_servicios(request):
@@ -145,5 +145,21 @@ def pagado(request, numero):
         total += pago.monto
 
     texto = f"Cita: {cita}<br>Total pagado: ${total}"
+
+    return HttpResponse(texto)
+
+def duracion(request):
+    citas = Cita.objects.all()
+
+    total_minutos = 0
+    for cita in citas:
+        if cita.estado == 'confirmada':
+            total_minutos += cita.servicio.duracion_min
+
+    horas = total_minutos // 60
+    minutos = total_minutos % 60
+
+    texto = f"Tiempo agendado: {total_minutos} minutos<br>"
+    texto += f"Equivale a {horas} horas y {minutos} minutos"
 
     return HttpResponse(texto)

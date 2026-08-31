@@ -29,5 +29,6 @@ urlpatterns = [
     path('servicios/economicos/', views.economicos),
     path('cita/<int:numero>/estado/', views.estado),
     path('cita/<int:numero>/', views.detalle_cita),
-    path('cita/<int:numero>/pagado/', views.pagado)
+    path('cita/<int:numero>/pagado/', views.pagado),
+    path('citas/duracion/', views.duracion),
 ]
