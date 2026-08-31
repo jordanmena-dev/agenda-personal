@@ -215,3 +215,30 @@ def informe(request):
     texto += f"Monto pendiente: ${pendiente_de_cobro}"
 
     return HttpResponse(texto)
+
+def populares(request):
+    servicios = Servicio.objects.all()
+    citas = Cita.objects.all()
+
+    texto = ""
+    max_cantidad = 0
+    mas_pedido = ""
+
+    for servicio in servicios:
+        cantidad = 0
+        for cita in citas:
+            if cita.servicio_id == servicio.id:
+                cantidad += 1
+
+        texto += f"{servicio.nombre}: {cantidad} citas<br>"
+
+        if cantidad > max_cantidad:
+            max_cantidad = cantidad
+            mas_pedido = servicio.nombre
+
+    if mas_pedido == "":
+        texto += "<br>No hay citas registradas"
+    else:
+        texto += f"<br>El mas solicitado es: {mas_pedido} con {max_cantidad} citas"
+
+    return HttpResponse(texto)

@@ -33,4 +33,5 @@ urlpatterns = [
     path('citas/duracion/', views.duracion),
     path('clientes/citas/', views.citas_por_cliente),
     path('informe/', views.informe),
+    path('servicios/populares/', views.populares),
 ]
