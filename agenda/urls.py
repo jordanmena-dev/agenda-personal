@@ -31,4 +31,5 @@ urlpatterns = [
     path('cita/<int:numero>/', views.detalle_cita),
     path('cita/<int:numero>/pagado/', views.pagado),
     path('citas/duracion/', views.duracion),
+    path('clientes/citas/', views.citas_por_cliente),
 ]

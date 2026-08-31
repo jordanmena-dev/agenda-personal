@@ -163,3 +163,20 @@ def duracion(request):
     texto += f"Equivale a {horas} horas y {minutos} minutos"
 
     return HttpResponse(texto)
+
+def citas_por_cliente(request):
+    clientes = Cliente.objects.all()
+
+    texto = ""
+    for cliente in clientes:
+        cantidad = 0
+        for cita in cliente.citas.all():
+            cantidad += 1
+
+        marca = ""
+        if cantidad > 1:
+            marca = " *"
+
+        texto += f"{cliente.nombre}: {cantidad} citas{marca}<br>"
+
+    return HttpResponse(texto)
