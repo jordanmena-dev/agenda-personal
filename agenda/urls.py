@@ -27,4 +27,5 @@ urlpatterns = [
     path('citas/ingresos', views.facturados),
     path('citas/pendientes', views.pendientes),
     path('servicios/economicos', views.economicos),
+    path('cita/<int:numero>/estado/', views.estado),
 ]

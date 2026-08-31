@@ -87,3 +87,17 @@ def economicos(request):
             texto += f"{servicio.nombre} - Duracion: {servicio.duracion_min} minutos - precio: ${servicio.precio}<br>"
 
     return HttpResponse(texto)
+
+def estado(request, numero):
+    cita = Cita.objects.get(id=numero)
+
+    texto = ""
+
+    if cita.estado == "pendiente":
+        texto = "Su cita esta pendiente"
+    elif cita.estado == "confirmada":
+        texto = "Su cita esta confirmada"
+    else:
+        texto = "usted ya fue atendido/da"
+
+    return HttpResponse(texto)
