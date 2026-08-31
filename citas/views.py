@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .models import Servicio
+from .models import Servicio, Cita
 
 def lista_servicios(request):
     servicios = Servicio.objects.all()
@@ -38,4 +38,13 @@ def resumen(request):
 
     texto = f"total de servicios: {suma} Servicio mas caro: {precio_max}<br> Promedio: {precio_avg}"
     
+    return HttpResponse(texto)
+
+def lista_citas(request):
+    citas = Cita.objects.all()
+
+    texto = ""
+    for cita in citas:
+        texto += f"nombre:{cita.cliente} - servicio: {cita.servicio} minutos - estado: ${cita.Estado}<br>"
+
     return HttpResponse(texto)
