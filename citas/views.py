@@ -180,3 +180,38 @@ def citas_por_cliente(request):
         texto += f"{cliente.nombre}: {cantidad} citas{marca}<br>"
 
     return HttpResponse(texto)
+
+def informe(request):
+    citas = Cita.objects.all()
+
+    total_citas = 0
+    pendientes = 0
+    confirmadas = 0
+    atendidas = 0
+    total_pagado = 0
+    total_precio = 0
+
+    for cita in citas:
+        total_citas += 1
+        total_precio += cita.servicio.precio
+
+        if cita.estado == 'pendiente':
+            pendientes += 1
+        elif cita.estado == 'confirmada':
+            confirmadas += 1
+        else:
+            atendidas += 1
+
+        for pago in cita.pagos.all():
+            total_pagado += pago.monto
+
+    pendiente_de_cobro = total_precio - total_pagado
+
+    texto = f"Total de citas: {total_citas}<br>"
+    texto += f"Pendientes: {pendientes}<br>"
+    texto += f"Confirmadas: {confirmadas}<br>"
+    texto += f"Atendidas: {atendidas}<br>"
+    texto += f"Monto total pagado: ${total_pagado}<br>"
+    texto += f"Monto pendiente: ${pendiente_de_cobro}"
+
+    return HttpResponse(texto)
