@@ -45,6 +45,6 @@ def lista_citas(request):
 
     texto = ""
     for cita in citas:
-        texto += f"nombre:{cita.cliente} - servicio: {cita.servicio} minutos - estado: ${cita.Estado}<br>"
+        texto += f"Nombre: {cita.cliente} - servicio: {cita.servicio} minutos - estado: {cita.estado}<br>"
 
     return HttpResponse(texto)
