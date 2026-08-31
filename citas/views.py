@@ -76,3 +76,14 @@ def pendientes(request):
         texto += f"total pendiente: {suma}"
 
     return HttpResponse(texto)
+
+def economicos(request):
+    servicios = Servicio.objects.all()
+
+    texto = ""
+    umbral = 15000
+    for servicio in servicios:
+        if servicio.precio < umbral:
+            texto += f"{servicio.nombre} - Duracion: {servicio.duracion_min} minutos - precio: ${servicio.precio}<br>"
+
+    return HttpResponse(texto)

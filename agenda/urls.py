@@ -25,5 +25,6 @@ urlpatterns = [
     path('servicios/resumen', views.resumen),
     path('citas/', views.lista_citas),
     path('citas/ingresos', views.facturados),
-    path('citas/pendientes', views.pendientes)
+    path('citas/pendientes', views.pendientes),
+    path('servicios/economicos', views.economicos),
 ]
