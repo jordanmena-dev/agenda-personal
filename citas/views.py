@@ -45,7 +45,7 @@ def lista_citas(request):
 
     texto = ""
     for cita in citas:
-        texto += f"Nombre: {cita.cliente} - servicio: {cita.servicio} minutos - estado: {cita.estado}<br>"
+        texto += f"Nombre: {cita.cliente} - servicio: {cita.servicio}- estado: {cita.estado}<br>"
 
     return HttpResponse(texto)
 
@@ -58,5 +58,21 @@ def facturados(request):
             facturas += cita.servicio.precio
 
     texto = f"Total facturado es : {facturas}"
+
+    return HttpResponse(texto)
+
+def pendientes(request):
+    citas = Cita.objects.all()
+
+    texto = ""
+    suma = 0
+    for cita in citas:
+        if cita.estado == 'pendiente':
+            suma += 1
+            texto += f"Nombre: {cita.cliente} - servicio: {cita.servicio} <br>"
+    if suma < 1:
+         texto = "No hay citas pendientes"
+    else:
+        texto += f"total pendiente: {suma}"
 
     return HttpResponse(texto)
