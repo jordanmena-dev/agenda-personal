@@ -11,7 +11,7 @@ class Cliente(models.Model):
 
 class Servicio(models.Model):
     nombre = models.CharField(max_length=80)
-    precio = models.DecimalField()
+    precio = models.DecimalField(max_digits=8, decimal_places=0)
     duracion_min = models.IntegerField(default=30)
 
     def __str__(self):
