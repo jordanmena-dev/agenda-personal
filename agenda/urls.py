@@ -20,5 +20,7 @@ from citas import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('citas/', views.lista_servicios)
+    path('servicios/iva', views.servicios_iva),
+    path('servicios', views.lista_servicios),
+    path('servicios/resumen', views.resumen)
 ]
