@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from .models import Servicio, Cita
+from django.utils import timezone
 
 def lista_servicios(request):
     servicios = Servicio.objects.all()
@@ -99,5 +100,50 @@ def estado(request, numero):
         texto = "Su cita esta confirmada"
     else:
         texto = "usted ya fue atendido/da"
+
+    return HttpResponse(texto)
+
+def detalle_cita(request, numero):
+    try:
+        cita = Cita.objects.get(id=numero)
+    except Cita.DoesNotExist:
+        return HttpResponse(f"No existe una cita con el numero {numero}")
+
+    precio = cita.servicio.precio
+
+    total_pagado = 0
+    listado = ""
+    for pago in cita.pagos.all():
+        total_pagado += pago.monto
+        listado += f"${pago.monto} - {pago.get_metodo_de_pago_display()}<br>"
+
+    if listado == "":
+        listado = "Sin pagos registrados<br>"
+
+    saldo = precio - total_pagado
+
+    texto = f"Cliente: {cita.cliente.nombre}<br>"
+    texto += f"Servicio: {cita.servicio.nombre}<br>"
+    texto += f"Fecha: {timezone.localtime(cita.fecha).strftime('%d/%m/%Y %H:%M')}<br>"
+    texto += f"Estado: {cita.get_estado_display()}<br>"
+    texto += f"Precio del servicio: ${precio}<br><br>"
+    texto += f"Pagos:<br>{listado}<br>"
+    texto += f"Total pagado: ${total_pagado}<br>"
+
+    if saldo <= 0:
+        texto += "La cita esta pagada"
+    else:
+        texto += f"Falta por pagar: ${saldo}"
+
+    return HttpResponse(texto)
+
+def pagado(request, numero):
+    cita = Cita.objects.get(id=numero)
+
+    total = 0
+    for pago in cita.pagos.all():
+        total += pago.monto
+
+    texto = f"Cita: {cita}<br>Total pagado: ${total}"
 
     return HttpResponse(texto)

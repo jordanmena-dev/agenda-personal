@@ -20,12 +20,14 @@ from citas import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('servicios/iva', views.servicios_iva),
-    path('servicios', views.lista_servicios),
-    path('servicios/resumen', views.resumen),
+    path('servicios/iva/', views.servicios_iva),
+    path('servicios/', views.lista_servicios),
+    path('servicios/resumen/', views.resumen),
     path('citas/', views.lista_citas),
-    path('citas/ingresos', views.facturados),
-    path('citas/pendientes', views.pendientes),
-    path('servicios/economicos', views.economicos),
+    path('citas/ingresos/', views.facturados),
+    path('citas/pendientes/', views.pendientes),
+    path('servicios/economicos/', views.economicos),
     path('cita/<int:numero>/estado/', views.estado),
+    path('cita/<int:numero>/', views.detalle_cita),
+    path('cita/<int:numero>/pagado/', views.pagado)
 ]
