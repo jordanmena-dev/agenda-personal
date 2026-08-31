@@ -23,5 +23,6 @@ urlpatterns = [
     path('servicios/iva', views.servicios_iva),
     path('servicios', views.lista_servicios),
     path('servicios/resumen', views.resumen),
-    path('citas/', views.lista_citas)
+    path('citas/', views.lista_citas),
+    path('citas/ingresos', views.facturados)
 ]

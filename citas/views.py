@@ -48,3 +48,15 @@ def lista_citas(request):
         texto += f"Nombre: {cita.cliente} - servicio: {cita.servicio} minutos - estado: {cita.estado}<br>"
 
     return HttpResponse(texto)
+
+def facturados(request):
+    citas = Cita.objects.all()
+
+    facturas = 0
+    for cita in citas:
+        if cita.estado == "atendida":
+            facturas += cita.servicio.precio
+
+    texto = f"Total facturado es : {facturas}"
+
+    return HttpResponse(texto)
